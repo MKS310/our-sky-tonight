@@ -1,0 +1,12 @@
+PLACEHOLDER IMAGES NEEDED
+
+Please replace this file with actual astronomy photos. You'll need 3-5 images in JPG, PNG, or GIF format.
+
+Suggested images:
+1. milky-way.jpg - Photo of the Milky Way
+2. moon.jpg - Moon photography
+3. orion-nebula.jpg - Deep sky object
+4. sunset-neenah.jpg - Local sunset or astronomical twilight
+5. night-sky.jpg - General night sky photo
+
+The build script will randomly select one image each time it runs.

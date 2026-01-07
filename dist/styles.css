@@ -340,7 +340,7 @@ a:visited {
 
 /* Chart Container Styles */
 .chart-container {
-  background: var(--astro-midnight);
+  background: #f8f9fa;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -350,6 +350,23 @@ a:visited {
   border-radius: 4px;
   display: block;
   margin: 0 auto;
+  background: white;
+}
+
+.chart-container img {
+  background: white;
+}
+
+.chart-container p {
+  color: var(--astro-dark-blue);
+}
+
+.chart-container a {
+  color: #0066cc;
+}
+
+.chart-container a:hover {
+  color: #004499;
 }
 
 /* Heading Styles */

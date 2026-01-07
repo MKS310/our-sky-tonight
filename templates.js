@@ -29,6 +29,49 @@ function clearSkyChartSection() {
   </section>`;
 }
 
+function auroraForecastSection() {
+  return `<section class="row mb-4">
+    <div class="col">
+      <h2 class="h3">Aurora Forecast</h2>
+      <div class="chart-container">
+        <img src="https://services.swpc.noaa.gov/images/animations/ovation/north/latest.jpg"
+             alt="NOAA Aurora Forecast - Northern Hemisphere"
+             style="width: 100%; height: auto; border-radius: 4px;">
+        <p class="small mt-2">
+          <a href="https://www.swpc.noaa.gov/communities/space-weather-enthusiasts-dashboard" target="_blank" rel="noopener">
+            NOAA Space Weather Dashboard →
+          </a> |
+          <a href="https://new-star.org/aurora-space/" target="_blank" rel="noopener">
+            Aurora Space Forecast →
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>`;
+}
+
+function skyTonightSection() {
+  return `<section class="row mb-4">
+    <div class="col">
+      <h2 class="h3">What's in the Sky Tonight</h2>
+      <div class="chart-container">
+        <p class="mb-2">
+          <strong>Moon Phase:</strong> Check current phase on
+          <a href="https://theskylive.com/moon-info" target="_blank" rel="noopener">TheSkyLive</a>
+        </p>
+        <p class="mb-2">
+          <strong>Visible Planets:</strong> See what's visible tonight on
+          <a href="https://theskylive.com/planetarium" target="_blank" rel="noopener">TheSkyLive Planetarium</a>
+        </p>
+        <p class="mb-2">
+          <strong>Tonight's Highlights:</strong>
+          <a href="https://theskylive.com/" target="_blank" rel="noopener">View all celestial events →</a>
+        </p>
+      </div>
+    </div>
+  </section>`;
+}
+
 module.exports.document = function (body, imageUrl) {
   return `<!DOCTYPE html>
   <html lang="en">
@@ -55,6 +98,8 @@ module.exports.document = function (body, imageUrl) {
       </header>
       <div class="container mb-3">
         ${clearSkyChartSection()}
+        ${auroraForecastSection()}
+        ${skyTonightSection()}
         <div class="row mb-3">
           <div class="col-md-4 mb-3">
             ${heroSection(imageUrl)}

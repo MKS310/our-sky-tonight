@@ -1,24 +1,11 @@
 function heroSection(imageUrl) {
   if (!imageUrl) {
-    return `<section class="hero-section mb-4">
-      <div class="hero-image-container">
-        <div class="hero-overlay">
-          <h2 class="hero-title">Our Sky Tonight - Neenah, WI</h2>
-          <p class="hero-subtitle">Astronomy viewing conditions and news</p>
-        </div>
-      </div>
-    </section>`;
+    return '';
   }
 
-  return `<section class="hero-section mb-4">
-    <div class="hero-image-container">
-      <img src="${imageUrl}" alt="Night Sky over Neenah, Wisconsin" class="hero-image">
-      <div class="hero-overlay">
-        <h2 class="hero-title">Our Sky Tonight - Neenah, WI</h2>
-        <p class="hero-subtitle">Astronomy viewing conditions and news</p>
-      </div>
-    </div>
-  </section>`;
+  return `<div class="hero-image-container">
+    <img src="${imageUrl}" alt="Night Sky over Neenah, Wisconsin" class="hero-image">
+  </div>`;
 }
 
 function clearSkyChartSection() {
@@ -58,20 +45,29 @@ module.exports.document = function (body, imageUrl) {
       <header class="bg-dark mb-4">
         <nav class="container navbar navbar-dark">
         <div class="container-fluid">
-          <h1 class="text-light h2 mb-0">Our Sky Tonight</h1>
+          <div>
+            <h1 class="text-light h2 mb-0">Our Sky Tonight</h1>
+            <p class="text-light small mb-0">Astronomy viewing conditions and news</p>
+          </div>
           <a rel="noopener" href="https://github.com/mcon/our-sky-tonight" class="text-light" title="See repository on Github">Github</a>
         </div>
         </nav>
       </header>
-      ${heroSection(imageUrl)}
       <div class="container mb-3">
         ${clearSkyChartSection()}
+        <div class="row mb-3">
+          <div class="col-md-4 mb-3">
+            ${heroSection(imageUrl)}
+          </div>
+          <div class="col-md-8">
+            ${body}
+          </div>
+        </div>
         <div class="row mb-3">
           <div class="col">
             <strong>Updated</strong>: ${new Date()}
           </div>
         </div>
-        ${body}
       </div>
       <footer class="bg-dark text-light p-4">
         <div class="container text-center">

@@ -1,7 +1,7 @@
 {
-  "name": "news-digest",
+  "name": "our-sky-tonight",
   "version": "1.0.0",
-  "description": "A single place to check all my daily news sites in 1 go",
+  "description": "A single place to check all space weather and clear sky forecasts for Neenah, WI!",
   "dependencies": {
     "rss-parser": "^3.13.0"
   },

@@ -1,19 +1,32 @@
 {
   "sections": [
     {
-      "title": "Tech",
+      "title": "Astronomy News",
       "items": [
         {
-          "title": "the Verge",
-          "url": "https://www.theverge.com/rss/index.xml"
+          "title": "NASA Breaking News",
+          "url": "http://www.nasa.gov/rss/breaking_news.rss"
         },
         {
-          "title": "Hacker News",
-          "url": "https://hnrss.org/best"
+          "title": "Space.com",
+          "url": "https://www.space.com/feeds/all"
         },
         {
-          "title": "THe Independent (News)",
-          "url": "https://www.independent.co.uk/news/rss"
+          "title": "Astronomy.com",
+          "url": "https://www.astronomy.com/feed"
+        },
+        {
+          "title": "AstroButterfly",
+          "url": "https://astrobutterfly.com/feed"
+        }
+      ]
+    },
+    {
+      "title": "Weather & Observing Conditions",
+      "items": [
+        {
+          "title": "Neenah Weather (NWS)",
+          "url": "https://forecast.weather.gov/xml/current_obs/KATW.rss"
         }
       ]
     }

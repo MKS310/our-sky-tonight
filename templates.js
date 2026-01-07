@@ -116,7 +116,7 @@ module.exports.document = function (body, imageUrl) {
       </div>
       <footer class="bg-dark text-light p-4">
         <div class="container text-center">
-          Made with <span class="pe-1">❤️</span> by Maggie in Neenah, Wisconsin
+          Made with <span class="pe-1">❤️</span> for Mike by Maggie in Neenah, Wisconsin
         </div>
       </footer>
     </main>

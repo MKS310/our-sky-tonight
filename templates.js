@@ -49,7 +49,7 @@ module.exports.document = function (body, imageUrl) {
             <h1 class="text-light h2 mb-0">Our Sky Tonight</h1>
             <p class="text-light small mb-0">Astronomy viewing conditions and news</p>
           </div>
-          <a rel="noopener" href="https://github.com/mcon/our-sky-tonight" class="text-light" title="See repository on Github">Github</a>
+          <a rel="noopener" href="https://github.com/MKS310/our-sky-tonight" class="text-light" title="See repository on Github">Github</a>
         </div>
         </nav>
       </header>

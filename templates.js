@@ -26,14 +26,14 @@ function clearSkyChartSection() {
     <div class="col">
       <h2 class="h3">Observing Conditions - Appleton/Neenah</h2>
       <div class="chart-container">
-        <iframe src="https://www.cleardarksky.com/c/AppletonWIkey.html?1"
+        <iframe src="https://www.cleardarksky.com/c/AppltnWIkey.html?1"
                 width="100%"
                 height="400"
                 frameborder="0"
                 title="Clear Sky Chart for Appleton/Neenah">
         </iframe>
         <p class="small mt-2">
-          <a href="https://www.cleardarksky.com/c/AppletonWIkey.html" target="_blank" rel="noopener">
+          <a href="https://www.cleardarksky.com/c/AppltnWIkey.html" target="_blank" rel="noopener">
             View full Clear Sky Chart →
           </a>
         </p>

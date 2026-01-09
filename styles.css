@@ -223,6 +223,11 @@ a:hover {
     width: 25%
   }
 
+  .col-md-4 {
+    flex: 0 0 auto;
+    width: 33.33333333%
+  }
+
   .col-md-5 {
     flex: 0 0 auto;
     width: 41.66666667%
@@ -231,6 +236,11 @@ a:hover {
   .col-md-6 {
     flex: 0 0 auto;
     width: 50%
+  }
+
+  .col-md-8 {
+    flex: 0 0 auto;
+    width: 66.66666667%
   }
 
   .col-md-9 {
@@ -286,6 +296,10 @@ a:hover {
 
 .text-center {
   text-align: center !important
+}
+
+.justify-content-center {
+  justify-content: center !important
 }
 
 .text-light {
@@ -376,6 +390,10 @@ a:visited {
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.chart-container-grey {
+  background: #d0d0d0;
 }
 
 .chart-container iframe {
@@ -486,19 +504,50 @@ strong {
   line-height: 1.5;
 }
 
-/* Gallery Image Styles */
-.gallery-image-container {
+/* Photo Gallery Styles */
+.photo-gallery {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--astro-comet) var(--astro-midnight);
+}
+
+.photo-gallery::-webkit-scrollbar {
+  height: 8px;
+}
+
+.photo-gallery::-webkit-scrollbar-track {
   background: var(--astro-midnight);
-  padding: 0.5rem;
-  border-radius: 8px;
-  border: 2px solid var(--astro-nebula);
+  border-radius: 4px;
+}
+
+.photo-gallery::-webkit-scrollbar-thumb {
+  background: var(--astro-comet);
+  border-radius: 4px;
+}
+
+.photo-gallery::-webkit-scrollbar-thumb:hover {
+  background: var(--astro-aurora);
+}
+
+.gallery-slide {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  max-width: 90vw;
 }
 
 .gallery-image {
-  width: 100%;
+  max-width: 400px;
+  max-height: 500px;
+  width: auto;
   height: auto;
+  object-fit: contain;
   border-radius: 4px;
   display: block;
+  border: 2px solid var(--astro-nebula);
 }
 
 /* Improve text contrast */
@@ -522,4 +571,95 @@ h2.h3 {
   color: var(--astro-aurora);
   border-bottom: 2px solid var(--astro-nebula);
   padding-bottom: 0.5rem;
+}
+
+/* APOD Section Styles */
+.chart-container h4 {
+  color: var(--astro-aurora);
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+
+/* Weather Widget Styles */
+.weather-widget {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.weather-period {
+  background: var(--astro-midnight);
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--astro-nebula);
+  text-align: center;
+}
+
+.weather-period-name {
+  color: var(--astro-aurora);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.weather-icon {
+  width: 60px;
+  height: 60px;
+  display: block;
+  margin: 0 auto 0.5rem;
+}
+
+.weather-temp {
+  color: var(--astro-star);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.weather-forecast {
+  color: #e6e6f0;
+  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
+}
+
+.weather-wind {
+  color: var(--astro-comet);
+  font-size: 0.75rem;
+}
+
+@media (max-width: 767px) {
+  .weather-widget {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Horoscope Card Styles */
+.horoscope-card {
+  background: var(--astro-midnight);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--astro-nebula);
+  height: 100%;
+  transition: transform 0.2s;
+}
+
+.horoscope-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--astro-aurora);
+}
+
+.horoscope-card h4 {
+  color: var(--astro-star);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.horoscope-card p {
+  color: #e6e6f0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  text-align: center;
 }

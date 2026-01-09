@@ -207,6 +207,38 @@ a:hover {
   flex: 1 0 0%
 }
 
+.g-3 {
+  --bs-gutter-x: 1rem;
+  --bs-gutter-y: 1rem
+}
+
+@media (min-width: 768px) {
+  .col-md-2 {
+    flex: 0 0 auto;
+    width: 16.66666667%
+  }
+
+  .col-md-3 {
+    flex: 0 0 auto;
+    width: 25%
+  }
+
+  .col-md-5 {
+    flex: 0 0 auto;
+    width: 41.66666667%
+  }
+
+  .col-md-6 {
+    flex: 0 0 auto;
+    width: 50%
+  }
+
+  .col-md-9 {
+    flex: 0 0 auto;
+    width: 75%
+  }
+}
+
 .navbar {
   position: relative;
   display: flex;

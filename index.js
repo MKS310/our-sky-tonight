@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const https = require('https');
 let Parser = require('rss-parser');
 const templates = require('./templates.js');
 let parser = new Parser();
@@ -9,8 +10,8 @@ const sources = JSON.parse(fs.readFileSync('sources.json'));
 // Create the requried folders
 fs.mkdir(`./dist`, () => {});
 
-// Function to get a random image from gallery
-function getRandomGalleryImage() {
+// Function to get 3 random images from gallery
+function getRandomGalleryImages(count = 3) {
   const galleryDir = './images/gallery/';
   try {
     const files = fs.readdirSync(galleryDir);
@@ -19,15 +20,47 @@ function getRandomGalleryImage() {
     );
 
     if (imageFiles.length === 0) {
-      return null; // No images found
+      return []; // No images found
     }
 
-    const randomImage = imageFiles[Math.floor(Math.random() * imageFiles.length)];
-    return `images/gallery/${randomImage}`;
+    // Shuffle and take the first 'count' images
+    const shuffled = imageFiles.sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, Math.min(count, imageFiles.length));
+    return selected.map(img => `images/gallery/${img}`);
   } catch (err) {
     console.log('No gallery images found');
-    return null;
+    return [];
   }
+}
+
+// Function to fetch quote from ZenQuotes API
+function fetchQuote() {
+  return new Promise((resolve, reject) => {
+    https.get('https://zenquotes.io/api/today', (res) => {
+      let data = '';
+
+      res.on('data', (chunk) => {
+        data += chunk;
+      });
+
+      res.on('end', () => {
+        try {
+          const quotes = JSON.parse(data);
+          if (quotes && quotes.length > 0) {
+            resolve({ text: quotes[0].q, author: quotes[0].a });
+          } else {
+            resolve({ text: 'The stars shine brightest in the darkest skies.', author: 'Anonymous' });
+          }
+        } catch (err) {
+          console.log('Error parsing quote:', err);
+          resolve({ text: 'The stars shine brightest in the darkest skies.', author: 'Anonymous' });
+        }
+      });
+    }).on('error', (err) => {
+      console.log('Error fetching quote:', err);
+      resolve({ text: 'The stars shine brightest in the darkest skies.', author: 'Anonymous' });
+    });
+  });
 }
 
 // Copy images directory to dist
@@ -102,7 +135,14 @@ sources.sections.forEach((section) => {
   });
 });
 
-Promise.all(promises).then((feeds) => {
+// Add quote fetching to promises
+promises.push(fetchQuote());
+
+Promise.all(promises).then((results) => {
+  // Last result is the quote, the rest are feeds
+  const quote = results[results.length - 1];
+  const feeds = results.slice(0, results.length - 1);
+
   let output = ``;
 
   feeds.forEach((feed) => {
@@ -116,10 +156,17 @@ Promise.all(promises).then((feeds) => {
     output += `</section>`;
   });
 
-  // Get random gallery image
-  const galleryImage = getRandomGalleryImage();
+  // Get 3 random gallery images
+  const galleryImages = getRandomGalleryImages(3);
 
-  output = templates.document(output, galleryImage);
+  // Get current date/time info
+  const now = new Date();
+  const dateTimeInfo = {
+    date: now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+    time: now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+  };
+
+  output = templates.document(output, galleryImages, quote, dateTimeInfo);
 
   // Copy images to dist folder
   copyImages();

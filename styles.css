@@ -1,14 +1,14 @@
 @charset "UTF-8";
 
 :root {
-  /* Astronomy-inspired color palette */
-  --astro-dark-blue: #0a1128;
-  --astro-midnight: #1a1a2e;
-  --astro-nebula: #16213e;
-  --astro-star: #f0e68c;
-  --astro-aurora: #5eaaa8;
-  --astro-galaxy: #7b2cbf;
-  --astro-comet: #4cc9f0;
+  /* Astronomy-inspired color palette - Updated for better accessibility */
+  --astro-dark-blue: #1a2332;
+  --astro-midnight: #2a3447;
+  --astro-nebula: #364156;
+  --astro-star: #ffd700;
+  --astro-aurora: #4fc3f7;
+  --astro-galaxy: #9c27b0;
+  --astro-comet: #64b5f6;
 
   /* Bootstrap compatibility colors */
   --bs-blue: var(--astro-comet);
@@ -400,4 +400,94 @@ time {
 /* Strong emphasis */
 strong {
   color: var(--astro-star);
+}
+
+/* Info Header Styles */
+.info-header {
+  background: var(--astro-midnight);
+  padding: 1.5rem 0;
+  border-bottom: 2px solid var(--astro-nebula);
+}
+
+.info-box {
+  background: var(--astro-dark-blue);
+  padding: 1rem;
+  border-radius: 8px;
+  height: 100%;
+  border: 1px solid var(--astro-nebula);
+}
+
+.info-box strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--astro-aurora);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-box p {
+  color: #e6e6f0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.info-box a {
+  color: var(--astro-comet);
+  text-decoration: none;
+}
+
+.info-box a:hover {
+  color: var(--astro-aurora);
+  text-decoration: underline;
+}
+
+.quote-box {
+  text-align: center;
+}
+
+.quote-box em {
+  color: #ffffff;
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+/* Gallery Image Styles */
+.gallery-image-container {
+  background: var(--astro-midnight);
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 2px solid var(--astro-nebula);
+}
+
+.gallery-image {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  display: block;
+}
+
+/* Improve text contrast */
+body {
+  color: #f0f0f0;
+}
+
+a {
+  color: var(--astro-aurora);
+}
+
+a:hover {
+  color: var(--astro-comet);
+}
+
+a:visited {
+  color: #ba68c8;
+}
+
+h2.h3 {
+  color: var(--astro-aurora);
+  border-bottom: 2px solid var(--astro-nebula);
+  padding-bottom: 0.5rem;
 }

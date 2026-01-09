@@ -27,7 +27,7 @@ To view the site locally without deploying to GitHub:
 ```bash
 # Navigate to the dist folder and start a local server
 cd dist
-python3 -m http.server 8000
+python3 -m http.server 8008
 ```
 
 Then open your browser to: `http://localhost:8000`

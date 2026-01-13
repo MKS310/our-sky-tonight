@@ -3,9 +3,13 @@ function photoGallerySection(imageUrls) {
     return '';
   }
 
-  const galleryImages = imageUrls.map(url => `
+  const galleryImages = imageUrls.map((url, index) => `
     <div class="gallery-slide">
-      <img src="${url}" alt="Night Sky over Neenah, Wisconsin" class="gallery-image">
+      <img src="${url}"
+           alt="Night Sky over Neenah, Wisconsin"
+           class="gallery-image"
+           loading="${index < 2 ? 'eager' : 'lazy'}"
+           decoding="async">
     </div>
   `).join('');
 
@@ -55,8 +59,11 @@ function dailyDashboardSection(weather) {
   }
 
   return `<section class="row mb-4">
+    <div class="col-12 mb-3">
+      <h2 class="h3">Today's Conditions & Forecast</h2>
+    </div>
     <div class="col-md-6 mb-3">
-      <h2 class="h3">Weather Forecast - Neenah, WI</h2>
+      <h3 class="h4">Weather Forecast - Neenah, WI</h3>
       <div class="chart-container">
         <div class="weather-widget">
           ${weatherWidget}
@@ -74,7 +81,7 @@ function dailyDashboardSection(weather) {
       </div>
     </div>
     <div class="col-md-6 mb-3">
-      <h2 class="h3">Aurora Forecast</h2>
+      <h3 class="h4">Aurora Forecast</h3>
       <div class="chart-container chart-container-grey">
         <img src="https://services.swpc.noaa.gov/images/animations/ovation/north/latest.jpg"
              alt="NOAA Aurora Forecast - Northern Hemisphere"
@@ -102,8 +109,8 @@ function apodSection(apod) {
       <h2 class="h3">NASA Astronomy Picture of the Day</h2>
       <div class="chart-container">
         ${apod.mediaType === 'video'
-          ? `<iframe src="${apod.url}" width="100%" height="400" frameborder="0" allowfullscreen></iframe>`
-          : `<img src="${apod.url}" alt="${apod.title}" style="width: 100%; height: auto; border-radius: 4px;">`
+          ? `<iframe src="${apod.url}" width="100%" height="400" frameborder="0" allowfullscreen loading="lazy"></iframe>`
+          : `<img src="${apod.url}" alt="${apod.title}" style="width: 100%; height: auto; border-radius: 4px;" loading="lazy" decoding="async">`
         }
         <h4 class="mt-3">${apod.title}</h4>
         <p class="small">${apod.explanation}</p>
@@ -145,27 +152,30 @@ function horoscopesSection(horoscopes) {
 
 function moonSunLinksSection() {
   return `<section class="row mb-4">
-    <div class="col-md-3 mb-3">
+    <div class="col-12 mb-3">
+      <h2 class="h3">Tonight's Sky - Quick Links</h2>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
       <div class="info-box">
         <strong>Moon Phase</strong>
         <p class="mb-1"><a href="https://theskylive.com/moon-info" target="_blank" rel="noopener">Current Phase →</a></p>
         <p class="mb-0"><a href="https://theskylive.com/planetarium?obj=moon" target="_blank" rel="noopener">Moonrise/Moonset →</a></p>
       </div>
     </div>
-    <div class="col-md-3 mb-3">
+    <div class="col-md-3 col-sm-6 mb-3">
       <div class="info-box">
         <strong>Sun Times</strong>
         <p class="mb-0"><a href="https://www.timeanddate.com/sun/usa/neenah" target="_blank" rel="noopener">Sunrise/Sunset Times →</a></p>
       </div>
     </div>
-    <div class="col-md-3 mb-3">
+    <div class="col-md-3 col-sm-6 mb-3">
       <div class="info-box">
         <strong>Sky Charts & Viewing</strong>
         <p class="mb-1"><a href="https://theskylive.com/" target="_blank" rel="noopener">TheSkyLive.com →</a></p>
         <p class="mb-0"><a href="https://theskylive.com/planetarium" target="_blank" rel="noopener">Visible Planets →</a></p>
       </div>
     </div>
-    <div class="col-md-3 mb-3">
+    <div class="col-md-3 col-sm-6 mb-3">
       <div class="info-box">
         <strong>Space Weather</strong>
         <p class="mb-1"><a href="https://www.swpc.noaa.gov/communities/space-weather-enthusiasts-dashboard" target="_blank" rel="noopener">NOAA Dashboard →</a></p>
@@ -304,7 +314,8 @@ module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, 
     <link type="text/css" rel="stylesheet" href="./styles.css?ver=2.0.0" media="all">
   </head>
   <body>
-    <main>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <main id="main-content">
       <header class="bg-dark mb-4">
         <nav class="container navbar navbar-dark">
         <div class="container-fluid">
@@ -321,24 +332,26 @@ module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, 
         ${moonSunLinksSection()}
         ${dailyDashboardSection(weather)}
         ${visiblePlanetsSection(planets)}
-        ${issPassesSection(issPasses)}
         ${clearSkySection()}
-        ${photoGallerySection(imageUrls)}
+        ${issPassesSection(issPasses)}
         ${apodSection(apod)}
+        ${photoGallerySection(imageUrls)}
         <section class="row mb-4">
           <div class="col">
             <h2 class="h3">Astro News RSS Feeds :)</h2>
           </div>
         </section>
         ${body}
-        <div class="row mb-3">
-          <div class="col">
-            <small><strong>Updated</strong>: ${new Date()}</small>
-          </div>
-        </div>
       </div>
       <div class="container mb-3">
         ${horoscopesSection(horoscopes)}
+      </div>
+      <div class="container mb-4">
+        <div class="row">
+          <div class="col text-center">
+            <small class="text-muted"><strong>Last Updated</strong>: ${new Date()}</small>
+          </div>
+        </div>
       </div>
       <footer class="bg-dark text-light p-4">
         <div class="container text-center">

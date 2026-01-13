@@ -301,7 +301,7 @@ module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Astronomy viewing conditions, weather, and news for Neenah, Wisconsin. Check clear sky charts and stay updated on celestial events. A little place to meander the cosmos and plan the next astral adventure :)">
     <title>Our Sky Tonight - Neenah, WI</title>
-    <link type="text/css" rel="stylesheet" href="./styles.css?ver=1.0.3" media="all">
+    <link type="text/css" rel="stylesheet" href="./styles.css?ver=2.0.0" media="all">
   </head>
   <body>
     <main>

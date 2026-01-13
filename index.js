@@ -200,6 +200,53 @@ function fetchHoroscopes() {
   });
 }
 
+// Function to fetch ISS pass predictions for Neenah, WI using Open-Notify API
+function fetchISSPasses() {
+  return new Promise((resolve) => {
+    const latitude = 44.1858;
+    const longitude = -88.4626;
+    const http = require('http'); // Open-Notify uses http, not https
+    const url = `http://api.open-notify.org/iss-pass.json?lat=${latitude}&lon=${longitude}&n=5`;
+
+    http.get(url, (res) => {
+      let data = '';
+
+      res.on('data', (chunk) => {
+        data += chunk;
+      });
+
+      res.on('end', () => {
+        try {
+          const response = JSON.parse(data);
+          if (response.response && Array.isArray(response.response)) {
+            // Get the passes and format the data
+            const formattedPasses = response.response.map(pass => ({
+              risetime: pass.risetime,
+              duration: pass.duration,
+              riseDate: new Date(pass.risetime * 1000).toLocaleDateString('en-US', {
+                weekday: 'short', month: 'short', day: 'numeric'
+              }),
+              riseTime: new Date(pass.risetime * 1000).toLocaleTimeString('en-US', {
+                hour: '2-digit', minute: '2-digit'
+              }),
+              durationMin: Math.round(pass.duration / 60)
+            }));
+            resolve(formattedPasses);
+          } else {
+            resolve([]);
+          }
+        } catch (err) {
+          console.log('Error parsing ISS passes:', err);
+          resolve([]);
+        }
+      });
+    }).on('error', (err) => {
+      console.log('Error fetching ISS passes:', err);
+      resolve([]);
+    });
+  });
+}
+
 // Copy images directory to dist
 function copyImages() {
   const sourceDir = './images';
@@ -283,15 +330,17 @@ promises.push(fetchAPOD());
 promises.push(fetchWeatherForecast());
 promises.push(fetchVisiblePlanets());
 promises.push(fetchHoroscopes());
+promises.push(fetchISSPasses());
 
 Promise.all(promises).then((results) => {
-  // Extract results: quote is 5th from end, apod is 4th from end, weather is 3rd from end, planets is 2nd from end, horoscopes is last
-  const quote = results[results.length - 5];
-  const apod = results[results.length - 4];
-  const weather = results[results.length - 3];
-  const planets = results[results.length - 2];
-  const horoscopes = results[results.length - 1];
-  const feeds = results.slice(0, results.length - 5);
+  // Extract results: quote is 6th from end, apod is 5th from end, weather is 4th from end, planets is 3rd from end, horoscopes is 2nd from end, iss is last
+  const quote = results[results.length - 6];
+  const apod = results[results.length - 5];
+  const weather = results[results.length - 4];
+  const planets = results[results.length - 3];
+  const horoscopes = results[results.length - 2];
+  const issPasses = results[results.length - 1];
+  const feeds = results.slice(0, results.length - 6);
 
   let output = ``;
 
@@ -316,7 +365,7 @@ Promise.all(promises).then((results) => {
     time: now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
   };
 
-  output = templates.document(output, galleryImages, quote, dateTimeInfo, apod, horoscopes, weather, planets);
+  output = templates.document(output, galleryImages, quote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses);
 
   // Copy images to dist folder
   copyImages();

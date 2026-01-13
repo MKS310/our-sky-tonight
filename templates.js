@@ -227,6 +227,52 @@ function visiblePlanetsSection(planets) {
   </section>`;
 }
 
+function issPassesSection(issPasses) {
+  if (!issPasses || issPasses.length === 0) {
+    return `<section class="row mb-4">
+    <div class="col">
+      <h2 class="h3">ISS Pass Predictions - Neenah, WI</h2>
+      <div class="chart-container">
+        <p class="text-center">No ISS passes available at this time.</p>
+        <p class="small text-center">
+          <a href="https://spotthestation.nasa.gov/" target="_blank" rel="noopener">
+            NASA Spot the Station →
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>`;
+  }
+
+  const passCards = issPasses.map(pass => `
+    <div class="col-md-4 mb-3">
+      <div class="info-box">
+        <strong>${pass.riseDate}</strong>
+        <p class="mb-1">🕐 ${pass.riseTime}</p>
+        <p class="mb-0">⏱️ Duration: ${pass.durationMin} minutes</p>
+      </div>
+    </div>
+  `).join('');
+
+  return `<section class="row mb-4">
+    <div class="col">
+      <h2 class="h3">ISS Pass Predictions - Neenah, WI</h2>
+      <p class="small mb-3">Upcoming visible passes of the International Space Station</p>
+      <div class="row">
+        ${passCards}
+      </div>
+      <p class="small text-center mt-2">
+        <a href="https://spotthestation.nasa.gov/" target="_blank" rel="noopener">
+          NASA Spot the Station →
+        </a> |
+        <a href="https://heavens-above.com/" target="_blank" rel="noopener">
+          Heavens-Above →
+        </a>
+      </p>
+    </div>
+  </section>`;
+}
+
 function clearSkySection() {
   return `<section class="row mb-4">
     <div class="col-md-9 mb-3">
@@ -246,7 +292,7 @@ function clearSkySection() {
   </section>`;
 }
 
-module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, horoscopes, weather, planets) {
+module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses) {
   return `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -275,6 +321,7 @@ module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, 
         ${moonSunLinksSection()}
         ${dailyDashboardSection(weather)}
         ${visiblePlanetsSection(planets)}
+        ${issPassesSection(issPasses)}
         ${clearSkySection()}
         ${photoGallerySection(imageUrls)}
         ${apodSection(apod)}
@@ -295,7 +342,7 @@ module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, 
       </div>
       <footer class="bg-dark text-light p-4">
         <div class="container text-center">
-          Made for Mike with <span class="pe-1">❤️</span> by Maggie (& Claude) in Neenah, Wisconsin
+          Made with <span class="pe-1">❤️</span> by Maggie (& Claude) in Neenah, Wisconsin
         </div>
       </footer>
     </main>

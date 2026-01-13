@@ -30,6 +30,14 @@
         {
           "title": "AstroButterfly",
           "url": "https://astrobutterfly.com/feed"
+        },
+        {
+          "title": "Phys.org Space News",
+          "url": "https://phys.org/rss-feed/space-news/"
+        },
+        {
+          "title": "ESA Space Science",
+          "url": "https://www.esa.int/rssfeed/Our_Activities/Space_Science"
         }
       ]
     },

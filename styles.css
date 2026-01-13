@@ -1,14 +1,23 @@
 @charset "UTF-8";
 
 :root {
-  /* Astronomy-inspired color palette - Updated for better accessibility */
-  --astro-dark-blue: #1a2332;
-  --astro-midnight: #2a3447;
-  --astro-nebula: #364156;
+  /* Terminal-inspired + Astronomy color palette */
+  --astro-dark-blue: #0a0e14;
+  --astro-midnight: #151820;
+  --astro-nebula: #1f2430;
   --astro-star: #ffd700;
-  --astro-aurora: #4fc3f7;
-  --astro-galaxy: #9c27b0;
-  --astro-comet: #64b5f6;
+  --astro-aurora: #58a6ff;
+  --astro-galaxy: #bc8cff;
+  --astro-comet: #79c0ff;
+
+  /* Terminal accent colors */
+  --terminal-green: #3fb950;
+  --terminal-cyan: #58a6ff;
+  --terminal-yellow: #f0883e;
+  --terminal-magenta: #bc8cff;
+  --terminal-fg: #e6edf3;
+  --terminal-fg-muted: #8b949e;
+  --terminal-border: #30363d;
 
   /* Bootstrap compatibility colors */
   --bs-blue: var(--astro-comet);
@@ -386,10 +395,11 @@ a:visited {
 
 /* Chart Container Styles */
 .chart-container {
-  background: #f8f9fa;
+  background: var(--astro-nebula);
   padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  border: 2px solid var(--terminal-border);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .chart-container-grey {
@@ -408,15 +418,15 @@ a:visited {
 }
 
 .chart-container p {
-  color: var(--astro-dark-blue);
+  color: var(--terminal-fg);
 }
 
 .chart-container a {
-  color: #0066cc;
+  color: var(--terminal-cyan);
 }
 
 .chart-container a:hover {
-  color: #004499;
+  color: var(--astro-comet);
 }
 
 /* Heading Styles */
@@ -460,11 +470,15 @@ strong {
 }
 
 .info-box {
-  background: var(--astro-dark-blue);
+  background: var(--astro-midnight);
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: 4px;
   height: 100%;
-  border: 1px solid var(--astro-nebula);
+  border: 2px solid var(--terminal-border);
+  border-left: 4px solid var(--terminal-cyan);
+  font-family: var(--bs-font-monospace);
+  font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .info-box strong {
@@ -494,14 +508,19 @@ strong {
 
 .quote-box {
   text-align: center;
+  border: 2px solid var(--terminal-border);
+  border-left: 4px solid var(--terminal-yellow);
+  padding: 1.5rem;
+  background: var(--astro-midnight);
 }
 
 .quote-box em {
-  color: #ffffff;
+  color: var(--terminal-fg);
   font-size: 1.1rem;
   display: block;
   margin-bottom: 0.5rem;
   line-height: 1.5;
+  font-family: var(--bs-font-monospace);
 }
 
 /* Photo Gallery Styles */
@@ -590,9 +609,12 @@ h2.h3 {
 .weather-period {
   background: var(--astro-midnight);
   padding: 0.75rem;
-  border-radius: 6px;
-  border: 1px solid var(--astro-nebula);
+  border-radius: 4px;
+  border: 2px solid var(--terminal-border);
+  border-top: 3px solid var(--terminal-cyan);
   text-align: center;
+  font-family: var(--bs-font-monospace);
+  font-size: 0.85rem;
 }
 
 .weather-period-name {
@@ -639,15 +661,19 @@ h2.h3 {
 .horoscope-card {
   background: var(--astro-midnight);
   padding: 1rem;
-  border-radius: 8px;
-  border: 1px solid var(--astro-nebula);
+  border-radius: 4px;
+  border: 2px solid var(--terminal-border);
+  border-left: 4px solid var(--terminal-magenta);
   height: 100%;
-  transition: transform 0.2s;
+  transition: all 0.2s;
+  font-family: var(--bs-font-monospace);
+  font-size: 0.85rem;
 }
 
 .horoscope-card:hover {
   transform: translateY(-2px);
-  border-color: var(--astro-aurora);
+  border-left-color: var(--astro-star);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .horoscope-card h4 {

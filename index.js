@@ -142,6 +142,44 @@ function fetchWeatherForecast() {
   });
 }
 
+// Function to fetch visible planets for Neenah, WI
+function fetchVisiblePlanets() {
+  return new Promise((resolve) => {
+    const latitude = 44.1858;
+    const longitude = -88.4626;
+    const url = `https://api.visibleplanets.dev/v3?latitude=${latitude}&longitude=${longitude}`;
+
+    https.get(url, (res) => {
+      let data = '';
+
+      res.on('data', (chunk) => {
+        data += chunk;
+      });
+
+      res.on('end', () => {
+        try {
+          const planets = JSON.parse(data);
+          // Filter for planets that are above horizon and reasonably visible
+          if (planets.data && Array.isArray(planets.data)) {
+            const visiblePlanets = planets.data.filter(planet =>
+              planet.aboveHorizon && planet.altitude > 0
+            );
+            resolve(visiblePlanets);
+          } else {
+            resolve([]);
+          }
+        } catch (err) {
+          console.log('Error parsing visible planets:', err);
+          resolve([]);
+        }
+      });
+    }).on('error', (err) => {
+      console.log('Error fetching visible planets:', err);
+      resolve([]);
+    });
+  });
+}
+
 // Function to fetch horoscopes for all zodiac signs
 function fetchHoroscopes() {
   return new Promise((resolve) => {
@@ -243,15 +281,17 @@ sources.sections.forEach((section) => {
 promises.push(fetchQuote());
 promises.push(fetchAPOD());
 promises.push(fetchWeatherForecast());
+promises.push(fetchVisiblePlanets());
 promises.push(fetchHoroscopes());
 
 Promise.all(promises).then((results) => {
-  // Extract results: quote is 4th from end, apod is 3rd from end, weather is 2nd from end, horoscopes is last
-  const quote = results[results.length - 4];
-  const apod = results[results.length - 3];
-  const weather = results[results.length - 2];
+  // Extract results: quote is 5th from end, apod is 4th from end, weather is 3rd from end, planets is 2nd from end, horoscopes is last
+  const quote = results[results.length - 5];
+  const apod = results[results.length - 4];
+  const weather = results[results.length - 3];
+  const planets = results[results.length - 2];
   const horoscopes = results[results.length - 1];
-  const feeds = results.slice(0, results.length - 4);
+  const feeds = results.slice(0, results.length - 5);
 
   let output = ``;
 
@@ -276,7 +316,7 @@ Promise.all(promises).then((results) => {
     time: now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
   };
 
-  output = templates.document(output, galleryImages, quote, dateTimeInfo, apod, horoscopes, weather);
+  output = templates.document(output, galleryImages, quote, dateTimeInfo, apod, horoscopes, weather, planets);
 
   // Copy images to dist folder
   copyImages();

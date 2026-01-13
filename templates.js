@@ -175,6 +175,58 @@ function moonSunLinksSection() {
   </section>`;
 }
 
+function visiblePlanetsSection(planets) {
+  if (!planets || planets.length === 0) {
+    return `<section class="row mb-4">
+    <div class="col">
+      <h2 class="h3">Visible Planets Tonight</h2>
+      <div class="chart-container">
+        <p class="text-center">No planets currently visible above the horizon in Neenah, WI.</p>
+        <p class="small text-center">
+          <a href="https://theskylive.com/planetarium" target="_blank" rel="noopener">
+            View Planetary Positions →
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>`;
+  }
+
+  const planetCards = planets.map(planet => {
+    const nakedEyeIcon = planet.nakedEyeObject ? '👁️' : '';
+    const magnitudeColor = planet.magnitude < 2 ? 'var(--astro-star)' : planet.magnitude < 4 ? 'var(--astro-aurora)' : 'var(--astro-comet)';
+
+    return `
+      <div class="col-md-4 mb-3">
+        <div class="info-box">
+          <strong>${planet.name} ${nakedEyeIcon}</strong>
+          <p class="mb-1">
+            <span style="color: ${magnitudeColor}">★</span> Magnitude: ${planet.magnitude.toFixed(2)}
+          </p>
+          <p class="mb-1">Altitude: ${planet.altitude.toFixed(1)}°</p>
+          <p class="mb-1">Azimuth: ${planet.azimuth.toFixed(1)}° (${planet.azimuthDirection})</p>
+          <p class="mb-0 small">In ${planet.constellation}</p>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  return `<section class="row mb-4">
+    <div class="col">
+      <h2 class="h3">Visible Planets Tonight</h2>
+      <p class="small mb-3">Planets currently above the horizon in Neenah, WI 👁️ = Visible to naked eye</p>
+      <div class="row">
+        ${planetCards}
+      </div>
+      <p class="small text-center mt-2">
+        <a href="https://theskylive.com/planetarium" target="_blank" rel="noopener">
+          View Interactive Planetarium →
+        </a>
+      </p>
+    </div>
+  </section>`;
+}
+
 function clearSkySection() {
   return `<section class="row mb-4">
     <div class="col-md-9 mb-3">
@@ -194,7 +246,7 @@ function clearSkySection() {
   </section>`;
 }
 
-module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, horoscopes, weather) {
+module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, horoscopes, weather, planets) {
   return `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -222,6 +274,7 @@ module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, 
       <div class="container mb-3">
         ${moonSunLinksSection()}
         ${dailyDashboardSection(weather)}
+        ${visiblePlanetsSection(planets)}
         ${clearSkySection()}
         ${photoGallerySection(imageUrls)}
         ${apodSection(apod)}

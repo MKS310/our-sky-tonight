@@ -12,7 +12,19 @@
           "url": "https://www.space.com/feeds/all"
         },
         {
-          "title": "Astronomy.com",
+          "title": "Sky & Telescope",
+          "url": "https://www.skyandtelescope.com/astronomy-news/feed/"
+        },
+        {
+          "title": "Universe Today",
+          "url": "https://www.universetoday.com/feed"
+        },
+        {
+          "title": "EarthSky",
+          "url": "https://earthsky.org/feed"
+        },
+        {
+          "title": "Astronomy Magazine",
           "url": "https://www.astronomy.com/feed"
         },
         {

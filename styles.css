@@ -440,6 +440,13 @@ h2.h3 {
   padding-bottom: 0.5rem;
 }
 
+h3, .h4 {
+  color: var(--terminal-cyan);
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
 /* Enhance list styles */
 ul {
   list-style-type: none;
@@ -576,14 +583,41 @@ body {
 
 a {
   color: var(--astro-aurora);
+  text-decoration: none;
 }
 
 a:hover {
   color: var(--astro-comet);
+  text-decoration: underline;
 }
 
 a:visited {
   color: #ba68c8;
+}
+
+/* Accessibility: Focus states */
+a:focus-visible,
+button:focus-visible,
+.info-box:focus-visible {
+  outline: 3px solid var(--terminal-cyan);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Skip to main content for keyboard navigation */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--terminal-cyan);
+  color: var(--astro-dark-blue);
+  padding: 8px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
 }
 
 h2.h3 {

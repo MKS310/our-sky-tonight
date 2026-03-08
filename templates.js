@@ -378,7 +378,20 @@ function clearSkySection() {
   </section>`;
 }
 
-module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses, meteorShowers, dailyJoke) {
+function stoicQuoteSection(stoicQuote) {
+  if (!stoicQuote) return '';
+  return `<section class="row mb-4 justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="info-box" style="border-left: 3px solid var(--accent-magenta);">
+        <small style="color: var(--accent-magenta); text-transform: uppercase; letter-spacing: 0.1em; font-weight: bold;">Stoic Thought of the Day</small>
+        <p class="mt-2 mb-1"><em>"${stoicQuote.text}"</em></p>
+        <p class="text-end mb-0"><small>— ${stoicQuote.author}</small></p>
+      </div>
+    </div>
+  </section>`;
+}
+
+module.exports.document = function (body, imageUrls, quote, stoicQuote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses, meteorShowers) {
   return `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -404,6 +417,9 @@ module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, 
         </nav>
       </header>
       ${headerInfoSection(quote)}
+      <div class="container mb-3">
+        ${stoicQuoteSection(stoicQuote)}
+      </div>
       <div class="container mb-3">
         ${moonSunLinksSection()}
         ${dailyDashboardSection(weather)}

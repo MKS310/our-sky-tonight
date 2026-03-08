@@ -283,6 +283,62 @@ function issPassesSection(issPasses) {
   </section>`;
 }
 
+function meteorShowersSection(showers) {
+  if (!showers || showers.length === 0) {
+    return `<section class="row mb-4">
+    <div class="col">
+      <h2 class="h3">Upcoming Meteor Showers</h2>
+      <div class="chart-container">
+        <p class="text-center">No major meteor showers in the next 90 days.</p>
+        <p class="small text-center">
+          <a href="https://www.amsmeteors.org/meteor-showers/meteor-shower-calendar/" target="_blank" rel="noopener">
+            View Full Calendar →
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>`;
+  }
+
+  const showerCards = showers.map(shower => {
+    const statusText = shower.daysUntil < 0
+      ? `Peak was ${Math.abs(shower.daysUntil)} day${Math.abs(shower.daysUntil) !== 1 ? 's' : ''} ago`
+      : shower.daysUntil === 0
+      ? '🌟 Peak is TODAY!'
+      : `Peak in ${shower.daysUntil} day${shower.daysUntil !== 1 ? 's' : ''}`;
+
+    return `
+    <div class="col-md-4 mb-3">
+      <div class="info-box">
+        <strong>${shower.name}</strong>
+        <p class="mb-1">📅 ${shower.peak}</p>
+        <p class="mb-1">⭐ ${shower.rate}</p>
+        <p class="mb-1 small">${shower.description}</p>
+        <p class="mb-0 small" style="color: var(--terminal-cyan)">${statusText}</p>
+      </div>
+    </div>
+  `;
+  }).join('');
+
+  return `<section class="row mb-4">
+    <div class="col">
+      <h2 class="h3">Upcoming Meteor Showers</h2>
+      <p class="small mb-3">Major meteor showers in the next 90 days</p>
+      <div class="row">
+        ${showerCards}
+      </div>
+      <p class="small text-center mt-2">
+        <a href="https://www.amsmeteors.org/meteor-showers/meteor-shower-calendar/" target="_blank" rel="noopener">
+          AMS Meteor Shower Calendar →
+        </a> |
+        <a href="https://www.imo.net/resources/calendar/" target="_blank" rel="noopener">
+          IMO Calendar →
+        </a>
+      </p>
+    </div>
+  </section>`;
+}
+
 function clearSkySection() {
   return `<section class="row mb-4">
     <div class="col-md-9 mb-3">
@@ -302,7 +358,7 @@ function clearSkySection() {
   </section>`;
 }
 
-module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses) {
+module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses, meteorShowers) {
   return `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -334,6 +390,7 @@ module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, 
         ${visiblePlanetsSection(planets)}
         ${clearSkySection()}
         ${issPassesSection(issPasses)}
+        ${meteorShowersSection(meteorShowers)}
         ${apodSection(apod)}
         ${photoGallerySection(imageUrls)}
         <section class="row mb-4">

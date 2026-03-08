@@ -200,6 +200,37 @@ function fetchHoroscopes() {
   });
 }
 
+// Function to get upcoming meteor showers
+function getUpcomingMeteorShowers() {
+  // 2026 major meteor showers with peak dates
+  const meteorShowers = [
+    { name: 'Quadrantids', peak: '2026-01-04', peakDate: new Date('2026-01-04'), rate: '120/hr', description: 'Best viewed before dawn' },
+    { name: 'Lyrids', peak: '2026-04-22', peakDate: new Date('2026-04-22'), rate: '20/hr', description: 'Ancient shower from Comet Thatcher' },
+    { name: 'Eta Aquarids', peak: '2026-05-06', peakDate: new Date('2026-05-06'), rate: '60/hr', description: 'Debris from Halley\'s Comet' },
+    { name: 'Perseids', peak: '2026-08-12', peakDate: new Date('2026-08-12'), rate: '100/hr', description: 'Most popular shower, excellent for viewing' },
+    { name: 'Draconids', peak: '2026-10-08', peakDate: new Date('2026-10-08'), rate: 'Variable', description: 'Best viewed in evening' },
+    { name: 'Orionids', peak: '2026-10-21', peakDate: new Date('2026-10-21'), rate: '25/hr', description: 'Also from Halley\'s Comet' },
+    { name: 'Leonids', peak: '2026-11-17', peakDate: new Date('2026-11-17'), rate: '15/hr', description: 'Fast, bright meteors' },
+    { name: 'Geminids', peak: '2026-12-14', peakDate: new Date('2026-12-14'), rate: '150/hr', description: 'Best shower of the year' }
+  ];
+
+  const now = new Date();
+  // Filter for upcoming showers within next 90 days
+  const upcoming = meteorShowers.filter(shower => {
+    const daysUntil = (shower.peakDate - now) / (1000 * 60 * 60 * 24);
+    return daysUntil >= -2 && daysUntil <= 90; // Show if peak is within 90 days or just passed (2 days ago)
+  });
+
+  // Format the showers
+  return upcoming.map(shower => ({
+    name: shower.name,
+    peak: shower.peakDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+    rate: shower.rate,
+    description: shower.description,
+    daysUntil: Math.ceil((shower.peakDate - now) / (1000 * 60 * 60 * 24))
+  }));
+}
+
 // Function to fetch ISS pass predictions for Neenah, WI using Open-Notify API
 function fetchISSPasses() {
   return new Promise((resolve) => {
@@ -358,6 +389,9 @@ Promise.all(promises).then((results) => {
   // Get all gallery images, shuffled
   const galleryImages = getGalleryImages();
 
+  // Get upcoming meteor showers
+  const meteorShowers = getUpcomingMeteorShowers();
+
   // Get current date/time info
   const now = new Date();
   const dateTimeInfo = {
@@ -365,7 +399,7 @@ Promise.all(promises).then((results) => {
     time: now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
   };
 
-  output = templates.document(output, galleryImages, quote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses);
+  output = templates.document(output, galleryImages, quote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses, meteorShowers);
 
   // Copy images to dist folder
   copyImages();

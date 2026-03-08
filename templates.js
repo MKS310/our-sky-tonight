@@ -124,6 +124,26 @@ function apodSection(apod) {
   </section>`;
 }
 
+function dailyJokeSection(joke) {
+  if (!joke) {
+    return '';
+  }
+
+  return `<section class="row mb-4">
+    <div class="col">
+      <h2 class="h3">Astronomy Joke of the Day</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+          <div class="info-box" style="border-left-color: var(--terminal-yellow);">
+            <p class="mb-2"><strong>Q:</strong> ${joke.joke}</p>
+            <p class="mb-0" style="color: var(--terminal-yellow);"><strong>A:</strong> ${joke.punchline}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>`;
+}
+
 function horoscopesSection(horoscopes) {
   if (!horoscopes) {
     return '';
@@ -141,7 +161,7 @@ function horoscopesSection(horoscopes) {
 
   return `<section class="row mb-4">
     <div class="col">
-      <h2 class="h3">Daily Horoscopes (Work in Progress...Aren't we all...)</h2>
+      <h2 class="h3">Daily Horoscopes</h2>
       <p class="small mb-3">For entertainment purposes only!</p>
       <div class="row">
         ${horoscopeHTML}
@@ -358,7 +378,7 @@ function clearSkySection() {
   </section>`;
 }
 
-module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses, meteorShowers) {
+module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses, meteorShowers, dailyJoke) {
   return `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -401,6 +421,7 @@ module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, 
         ${body}
       </div>
       <div class="container mb-3">
+        ${dailyJokeSection(dailyJoke)}
         ${horoscopesSection(horoscopes)}
       </div>
       <div class="container mb-4">

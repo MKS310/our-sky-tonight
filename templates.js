@@ -358,7 +358,21 @@ function clearSkySection() {
   </section>`;
 }
 
-module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses, meteorShowers) {
+function astrophotographyTipsSection(tip) {
+  if (!tip) return '';
+  return `<section class="row mb-4">
+    <div class="col">
+      <div class="info-box" style="border-left: 3px solid var(--accent-cyan);">
+        <small style="color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 0.1em; font-weight: bold;">Astrophotography Tip of the Day</small>
+        <span style="color: var(--terminal-fg-muted); font-size: 0.8em; margin-left: 0.75em;">${tip.category}</span>
+        <p class="mt-2 mb-1">${tip.tip}</p>
+        <p class="mb-0"><small><a href="https://astrobackyard.com/astrophotography-tips/" target="_blank" rel="noopener" style="color: var(--accent-cyan);">Learn More at AstroBackyard →</a></small></p>
+      </div>
+    </div>
+  </section>`;
+}
+
+module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses, meteorShowers, astroTip) {
   return `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -391,6 +405,7 @@ module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, 
         ${clearSkySection()}
         ${issPassesSection(issPasses)}
         ${meteorShowersSection(meteorShowers)}
+        ${astrophotographyTipsSection(astroTip)}
         ${apodSection(apod)}
         ${photoGallerySection(imageUrls)}
         <section class="row mb-4">

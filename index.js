@@ -62,6 +62,52 @@ function fetchQuote() {
   });
 }
 
+// Function to get a daily Stoic quote, rotated by day-of-year
+function fetchStoicQuote() {
+  return new Promise((resolve) => {
+    const quotes = [
+      { text: 'You have power over your mind, not outside events. Realize this, and you will find strength.', author: 'Marcus Aurelius' },
+      { text: 'The happiness of your life depends upon the quality of your thoughts.', author: 'Marcus Aurelius' },
+      { text: 'Waste no more time arguing about what a good man should be. Be one.', author: 'Marcus Aurelius' },
+      { text: 'It never ceases to amaze me: we all love ourselves more than other people, but care more about their opinion than our own.', author: 'Marcus Aurelius' },
+      { text: 'If it is not right, do not do it; if it is not true, do not say it.', author: 'Marcus Aurelius' },
+      { text: 'When you wake up in the morning, tell yourself: the people I deal with today will be meddling, ungrateful, arrogant, dishonest, jealous, and surly. They are like this because they cannot tell good from evil. But I have seen the beauty of good, and the ugliness of evil.', author: 'Marcus Aurelius' },
+      { text: 'Accept the things to which fate binds you, and love the people with whom fate brings you together.', author: 'Marcus Aurelius' },
+      { text: 'Very little is needed to make a happy life; it is all within yourself, in your way of thinking.', author: 'Marcus Aurelius' },
+      { text: 'Never let the future disturb you. You will meet it, if you have to, with the same weapons of reason which today arm you against the present.', author: 'Marcus Aurelius' },
+      { text: 'Confine yourself to the present.', author: 'Marcus Aurelius' },
+      { text: 'Men are disturbed not by the things which happen, but by the opinions about the things.', author: 'Epictetus' },
+      { text: 'Seek not the good in external things; seek it in yourselves.', author: 'Epictetus' },
+      { text: 'Make the best use of what is in your power, and take the rest as it happens.', author: 'Epictetus' },
+      { text: 'He is a wise man who does not grieve for the things which he has not, but rejoices for those which he has.', author: 'Epictetus' },
+      { text: 'No man is free who is not master of himself.', author: 'Epictetus' },
+      { text: 'First say to yourself what you would be; and then do what you have to do.', author: 'Epictetus' },
+      { text: 'It\'s not what happens to you, but how you react to it that matters.', author: 'Epictetus' },
+      { text: 'Wealth consists not in having great possessions, but in having few wants.', author: 'Epictetus' },
+      { text: 'Don\'t explain your philosophy. Embody it.', author: 'Epictetus' },
+      { text: 'We suffer more in imagination than in reality.', author: 'Seneca' },
+      { text: 'Luck is what happens when preparation meets opportunity.', author: 'Seneca' },
+      { text: 'Begin at once to live, and count each separate day as a separate life.', author: 'Seneca' },
+      { text: 'It is not that I\'m so brave. It\'s just that I bear difficulty better when I know it will end.', author: 'Seneca' },
+      { text: 'If a man knows not to which port he sails, no wind is favorable.', author: 'Seneca' },
+      { text: 'Omnia aliena sunt, tempus tantum nostrum est. All things are alien to us; time alone is ours.', author: 'Seneca' },
+      { text: 'Associate with those who will make a better man of you. Welcome those whom you yourself can improve.', author: 'Seneca' },
+      { text: 'Difficulties strengthen the mind, as labor does the body.', author: 'Seneca' },
+      { text: 'The first step: don\'t be anxious. Nature controls it all.', author: 'Marcus Aurelius' },
+      { text: 'How much more grievous are the consequences of anger than the causes of it.', author: 'Marcus Aurelius' },
+      { text: 'Loss is nothing else but change, and change is Nature\'s delight.', author: 'Marcus Aurelius' },
+      { text: 'The best revenge is not to be like your enemy.', author: 'Marcus Aurelius' },
+      { text: 'Perfection of character is this: to live each day as if it were your last, without frenzy, without apathy, without pretense.', author: 'Marcus Aurelius' }
+    ];
+
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const dayOfYear = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+
+    resolve(quotes[dayOfYear % quotes.length]);
+  });
+}
+
 // Function to fetch NASA APOD
 function fetchAPOD() {
   return new Promise((resolve) => {
@@ -357,6 +403,7 @@ sources.sections.forEach((section) => {
 
 // Add API fetches to promises
 promises.push(fetchQuote());
+promises.push(fetchStoicQuote());
 promises.push(fetchAPOD());
 promises.push(fetchWeatherForecast());
 promises.push(fetchVisiblePlanets());
@@ -364,14 +411,15 @@ promises.push(fetchHoroscopes());
 promises.push(fetchISSPasses());
 
 Promise.all(promises).then((results) => {
-  // Extract results: quote is 6th from end, apod is 5th from end, weather is 4th from end, planets is 3rd from end, horoscopes is 2nd from end, iss is last
-  const quote = results[results.length - 6];
+  // Extract results from the end: iss, horoscopes, planets, weather, apod, stoicQuote, quote
+  const quote = results[results.length - 7];
+  const stoicQuote = results[results.length - 6];
   const apod = results[results.length - 5];
   const weather = results[results.length - 4];
   const planets = results[results.length - 3];
   const horoscopes = results[results.length - 2];
   const issPasses = results[results.length - 1];
-  const feeds = results.slice(0, results.length - 6);
+  const feeds = results.slice(0, results.length - 7);
 
   let output = ``;
 
@@ -399,7 +447,7 @@ Promise.all(promises).then((results) => {
     time: now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
   };
 
-  output = templates.document(output, galleryImages, quote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses, meteorShowers);
+  output = templates.document(output, galleryImages, quote, stoicQuote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses, meteorShowers);
 
   // Copy images to dist folder
   copyImages();

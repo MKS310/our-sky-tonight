@@ -124,6 +124,26 @@ function apodSection(apod) {
   </section>`;
 }
 
+function dailyJokeSection(joke) {
+  if (!joke) {
+    return '';
+  }
+
+  return `<section class="row mb-4">
+    <div class="col">
+      <h2 class="h3">Astronomy Joke of the Day</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+          <div class="info-box" style="border-left-color: var(--terminal-yellow);">
+            <p class="mb-2"><strong>Q:</strong> ${joke.joke}</p>
+            <p class="mb-0" style="color: var(--terminal-yellow);"><strong>A:</strong> ${joke.punchline}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>`;
+}
+
 function horoscopesSection(horoscopes) {
   if (!horoscopes) {
     return '';
@@ -141,7 +161,7 @@ function horoscopesSection(horoscopes) {
 
   return `<section class="row mb-4">
     <div class="col">
-      <h2 class="h3">Daily Horoscopes (Work in Progress...Aren't we all...)</h2>
+      <h2 class="h3">Daily Horoscopes</h2>
       <p class="small mb-3">For entertainment purposes only!</p>
       <div class="row">
         ${horoscopeHTML}
@@ -367,12 +387,20 @@ function astrophotographyTipsSection(tip) {
         <span style="color: var(--terminal-fg-muted); font-size: 0.8em; margin-left: 0.75em;">${tip.category}</span>
         <p class="mt-2 mb-1">${tip.tip}</p>
         <p class="mb-0"><small><a href="https://astrobackyard.com/astrophotography-tips/" target="_blank" rel="noopener" style="color: var(--accent-cyan);">Learn More at AstroBackyard →</a></small></p>
+function stoicQuoteSection(stoicQuote) {
+  if (!stoicQuote) return '';
+  return `<section class="row mb-4 justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="info-box" style="border-left: 3px solid var(--accent-magenta);">
+        <small style="color: var(--accent-magenta); text-transform: uppercase; letter-spacing: 0.1em; font-weight: bold;">Stoic Thought of the Day</small>
+        <p class="mt-2 mb-1"><em>"${stoicQuote.text}"</em></p>
+        <p class="text-end mb-0"><small>— ${stoicQuote.author}</small></p>
       </div>
     </div>
   </section>`;
 }
 
-module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses, meteorShowers, astroTip) {
+module.exports.document = function (body, imageUrls, quote, stoicQuote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses, meteorShowers, astroTip) {
   return `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -399,6 +427,9 @@ module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, 
       </header>
       ${headerInfoSection(quote)}
       <div class="container mb-3">
+        ${stoicQuoteSection(stoicQuote)}
+      </div>
+      <div class="container mb-3">
         ${moonSunLinksSection()}
         ${dailyDashboardSection(weather)}
         ${visiblePlanetsSection(planets)}
@@ -416,6 +447,7 @@ module.exports.document = function (body, imageUrls, quote, dateTimeInfo, apod, 
         ${body}
       </div>
       <div class="container mb-3">
+        ${dailyJokeSection(dailyJoke)}
         ${horoscopesSection(horoscopes)}
       </div>
       <div class="container mb-4">

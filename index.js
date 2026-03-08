@@ -794,6 +794,48 @@ function copyImages() {
   }
 }
 
+// Returns a daily astrophotography tip, rotated by day-of-year
+function getAstroPhotographyTip() {
+  const tips = [
+    { tip: 'For Milky Way shots, use ISO 1600–3200, f/2.8 or faster, and the 500 rule: divide 500 by your focal length to find max shutter seconds before stars trail.', category: 'Camera Settings' },
+    { tip: 'Shoot RAW, never JPEG. The extra dynamic range in RAW files is critical for recovering shadow detail in dark sky images during post-processing.', category: 'Camera Settings' },
+    { tip: 'For lunar photography, use ISO 100–400 and fast shutter speeds (1/250s+). The moon is much brighter than it looks — treat it like daylight shooting.', category: 'Camera Settings' },
+    { tip: 'When shooting planets, use your highest frame rate and record video or burst mode. Stack the sharpest frames later to reduce atmospheric turbulence effects.', category: 'Planetary Imaging' },
+    { tip: 'Use live view and digital zoom to 10x when focusing on stars. Adjust until the stars are the smallest, sharpest pinpoints you can achieve.', category: 'Focusing' },
+    { tip: 'Tape your focus ring with gaffer tape once you nail focus in the dark. Temperature drops can shift focus slightly as the night progresses.', category: 'Focusing' },
+    { tip: 'A dew heater strap on your lens or telescope objective prevents dew from fogging optics on humid nights. Essential for multi-hour sessions.', category: 'Equipment' },
+    { tip: 'An intervalometer lets you take dozens of exposures hands-free for stacking or time-lapses. Even cheap ones work well — the camera does the hard work.', category: 'Equipment' },
+    { tip: 'An equatorial or alt-az tracking mount eliminates star trails in long exposures. Even a simple star tracker (Sky-Watcher Star Adventurer, iOptron SkyGuider) transforms wide-field shots.', category: 'Equipment' },
+    { tip: 'Use a red flashlight to preserve night vision. Your eyes take 20–30 minutes to fully dark-adapt; a single white light flash resets the clock.', category: 'Field Technique' },
+    { tip: 'Give your camera 20–30 minutes to cool down to ambient temperature before shooting. Warm sensors in cold air produce more thermal noise.', category: 'Camera Settings' },
+    { tip: 'Shoot multiple exposures and stack them to reduce noise. Free tools like DeepSkyStacker (Windows) or Siril (cross-platform) automate this process.', category: 'Post-Processing' },
+    { tip: 'In Lightroom or Photoshop, start post-processing with noise reduction before increasing exposure or contrast — this prevents amplifying noise alongside the signal.', category: 'Post-Processing' },
+    { tip: 'Star trails require 30–60+ continuous exposures. Use an app like Startrails or StarStax to stack them into a single image showing full arcs.', category: 'Creative Techniques' },
+    { tip: 'Point toward Polaris (North Star) for circular star trails. Point away from it for straight or diagonal streaks. Both are compelling; choose based on your composition.', category: 'Creative Techniques' },
+    { tip: 'Light pollution gradients show up as orange or gray glows from cities. Shoot when the source is behind you, or use a light pollution filter (L-Pro, CLS) to reduce it.', category: 'Light Pollution' },
+    { tip: 'Dark sky finder apps like Light Pollution Map or Clear Outside help you find nearby dark sky sites. Even 30 miles from a city can dramatically improve your shots.', category: 'Light Pollution' },
+    { tip: 'March–September is Milky Way season in the Northern Hemisphere. The galactic core rises above the horizon and is most dramatic at 1–3 AM local time in spring.', category: 'Seasonal Targets' },
+    { tip: 'Winter skies offer Orion Nebula (M42), the Pleiades cluster, and excellent transparency due to dry cold air. Bundle up — cold fingers make camera adjustments miserable.', category: 'Seasonal Targets' },
+    { tip: 'The Andromeda Galaxy (M31) is the farthest object visible to the naked eye at 2.5 million light-years. Find it in the autumn sky north of the Great Square of Pegasus.', category: 'Targets' },
+    { tip: 'Jupiter and Saturn reward even basic DSLR setups. A 300mm+ telephoto shows Jupiter\'s moons as dots; a 1000mm equivalent begins to show Saturn\'s rings.', category: 'Planetary Imaging' },
+    { tip: 'A histogram is your best exposure tool in the dark. Aim to push the histogram right without clipping highlights — this gives you the best signal-to-noise ratio.', category: 'Camera Settings' },
+    { tip: 'Calibration frames — darks, flats, and bias — dramatically improve stacked images by removing sensor noise patterns and lens vignetting. Take them every session.', category: 'Post-Processing' },
+    { tip: 'Foreground elements — trees, silos, a telescope silhouette — anchor Milky Way images and provide scale. Shoot the foreground at blue hour before full dark for natural color.', category: 'Composition' },
+    { tip: 'The rule of thirds applies to night sky photography too. Place the horizon in the lower third, Milky Way core in the upper portion, and the brightest region slightly off-center.', category: 'Composition' },
+    { tip: 'Patience is your most important tool. The best seeing conditions, the clearest skies, and the most dramatic Milky Way rise all require waiting. Plan around moonrise/set times.', category: 'Field Technique' },
+    { tip: 'Smartphone apps like SkySafari, Stellarium, or PhotoPills let you pre-visualize exactly where the Milky Way will be at any location, date, and time. Plan your shot in advance.', category: 'Planning' },
+    { tip: 'Shoot during new moon week for the darkest skies. A full moon brightens the sky enough to wash out faint nebulae and drastically cut Milky Way contrast.', category: 'Planning' },
+    { tip: 'Star clusters and nebulae are often better targets for beginners than galaxies. The Orion Nebula, Pleiades, and Omega Centauri show stunning detail with modest equipment.', category: 'Targets' },
+    { tip: 'JPEG white balance is baked in permanently. In RAW, you can shift white balance in post to reveal the true amber-to-blue tones of a dark sky without quality loss.', category: 'Post-Processing' }
+  ];
+
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+
+  return tips[dayOfYear % tips.length];
+}
+
 function createFile(fileName, data) {
   fs.writeFile(fileName, data, (err) => {
     if (!err) {
@@ -859,6 +901,8 @@ Promise.all(promises).then((results) => {
   // Get upcoming meteor showers
   const meteorShowers = getUpcomingMeteorShowers();
 
+  // Get daily astrophotography tip
+  const astroTip = getAstroPhotographyTip();
   // Get daily astronomy joke
   const dailyJoke = getDailyAstronomyJoke();
 

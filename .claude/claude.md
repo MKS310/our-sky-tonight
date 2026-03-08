@@ -354,12 +354,13 @@ Skills help Claude focus on specific domains and maintain consistent patterns ac
 
 ### Phase 4: Feature Enhancements (Partial)
 - [x] Integrate ISS pass predictions (static build-time data)
-- [x] Create "Fun Stuff" section (horoscopes)
-- [ ] Add meteor shower calendar (upcoming events)
+- [x] Create "Fun Stuff" section (horoscopes, daily astronomy joke)
+- [x] Add meteor shower calendar (2026 major showers with 90-day window)
+- [x] Add astronomy joke of the day (15 curated jokes rotating daily)
 - [ ] Implement dark/light mode toggle with local storage
 - [ ] Progressive Web App (PWA) support (installable, offline-capable)
 - [ ] Add client-side preferences (collapsed sections, favorite feeds)
-- [ ] Discover more "fun stuff" APIs (jokes, word of the day, trivia)
+- [ ] Discover more "fun stuff" APIs (word of the day, space trivia)
 
 ### Phase 5: Performance & Polish ✅ **COMPLETED**
 - [x] Lazy-load images in gallery

@@ -387,6 +387,11 @@ function astrophotographyTipsSection(tip) {
         <span style="color: var(--terminal-fg-muted); font-size: 0.8em; margin-left: 0.75em;">${tip.category}</span>
         <p class="mt-2 mb-1">${tip.tip}</p>
         <p class="mb-0"><small><a href="https://astrobackyard.com/astrophotography-tips/" target="_blank" rel="noopener" style="color: var(--accent-cyan);">Learn More at AstroBackyard →</a></small></p>
+      </div>
+    </div>
+  </section>`;
+}
+
 function stoicQuoteSection(stoicQuote) {
   if (!stoicQuote) return '';
   return `<section class="row mb-4 justify-content-center">
@@ -400,7 +405,7 @@ function stoicQuoteSection(stoicQuote) {
   </section>`;
 }
 
-module.exports.document = function (body, imageUrls, quote, stoicQuote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses, meteorShowers, astroTip) {
+module.exports.document = function (body, imageUrls, quote, stoicQuote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses, meteorShowers, astroTip, dailyJoke) {
   return `<!DOCTYPE html>
   <html lang="en">
   <head>

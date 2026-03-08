@@ -913,7 +913,7 @@ Promise.all(promises).then((results) => {
     time: now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
   };
 
-  output = templates.document(output, galleryImages, quote, stoicQuote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses, meteorShowers, dailyJoke);
+  output = templates.document(output, galleryImages, quote, stoicQuote, dateTimeInfo, apod, horoscopes, weather, planets, issPasses, meteorShowers, astroTip, dailyJoke);
 
   // Copy images to dist folder
   copyImages();
